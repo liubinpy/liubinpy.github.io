@@ -320,30 +320,43 @@
 
         
             
- 
-    <div id="waline"></div>
-    <script type="module"  data-swup-reload-script>
-        import { init } from '/js/libs/waline.mjs';
+    <div id="gitalk-container"></div>
+    <script data-swup-reload-script
+            src="//cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js"></script>
+    <script data-swup-reload-script>
 
-        function loadWaline() {
-            init({
-                el: '#waline',
-                serverURL: 'https://example.example.com',
-                lang: 'zh-CN',
-                dark: 'body[class~="dark-mode"]',
-                requiredMeta: ['nick','mail'], // cannot customize by theme config, change it yourself
-            });
+        function loadGitalk() {
+            let __gitalk__pathname = decodeURI(location.pathname);
+            const __gitalk__pathnameLength = __gitalk__pathname.length;
+            const __gitalk__pathnameMaxLength = 50;
+            if (__gitalk__pathnameLength > __gitalk__pathnameMaxLength) {
+                __gitalk__pathname = __gitalk__pathname.substring(0, __gitalk__pathnameMaxLength - 3) + '...';
+            }
+
+            try {
+                Gitalk && new Gitalk({
+                    clientID: '356bc04663e431271de1',
+                    clientSecret: '4711427f97f153ea5b8b513fee1272ed9036547b',
+                    repo: 'Gitalk',
+                    owner: 'liubinpy',
+                    admin: ['liubinpy'],
+                    id: __gitalk__pathname,
+                    language: 'en'
+                }).render('gitalk-container');
+
+            } catch (e) {
+                window.Gitalk = null;
+            }
         }
 
         if ('true') {
-            const loadWalineTimeout = setTimeout(() => {
-                loadWaline();
-                clearTimeout(loadWalineTimeout);
+            const loadGitalkTimeout = setTimeout(() => {
+                loadGitalk();
+                clearTimeout(loadGitalkTimeout);
             }, 1000);
         } else {
-            window.addEventListener('DOMContentLoaded', loadWaline);
+            window.addEventListener('DOMContentLoaded', loadGitalk);
         }
-        
     </script>
 
 
