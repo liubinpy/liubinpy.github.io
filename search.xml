@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>《出师表》</title>
+    <url>/2023/10/12/001/</url>
+    <content><![CDATA[<p>《诸葛亮出师表》写了当时蜀汉丞相诸葛亮面对国家危难，以及他在艰难险阻中，坚持忠诚为国家尽心尽力的决心和志向。</p>
+<h2 id="作者简介"><a href="#作者简介" class="headerlink" title="作者简介"></a>作者简介</h2><p>诸葛亮（181年-234年），字孔明，号卧龙，汉族，蜀汉丞相，被誉为“睿智之士”，是中国历史上著名的政治家、军事家、文学家、发明家。</p>
+<h3 id="全文"><a href="#全文" class="headerlink" title="全文"></a>全文</h3><p>先帝创业未半而中道崩殂，今天下三分，益州疲弊，此诚危急存亡之秋也。然侍卫之臣不懈于内，忠志之士忘身于外者，盖追先帝之殊遇，欲报之于陛下也。诚宜开张圣听，以光先帝遗德，恢弘志士之气，不宜妄自菲薄，引喻失义，以塞忠谏之路也。宫中府中，俱为一体，陟罚臧否，不宜异同。若有作奸犯科及为忠善者，宜付有司论其刑赏，以昭陛下平明之理，不宜偏私，使内外异法也。侍中、侍郎郭攸之、费祎、董允等，此皆良实，志虑忠纯，是以先帝简拔以遗陛下。愚以为宫中之事，事无大小，悉以咨之，然后施行，必能裨补阙漏，有所广益。将军向宠，性行淑均，晓畅军事，试用于昔日，先帝称之曰能，是以众议举宠为督。愚以为营中之事，悉以咨之，必能使行阵和睦，优劣得所。亲贤臣，远小人，此先汉所以兴隆也；亲小人，远贤臣，此后汉所以倾颓也。先帝在时，每与臣论此事，未尝不叹息痛恨于桓、灵也。侍中、尚书、长史、参军，此悉贞良死节之臣，愿陛下亲之信之，则汉室之隆，可计日而待也。臣本布衣，躬耕于南阳，苟全性命于乱世，不求闻达于诸侯。先帝不以臣卑鄙，猥自枉屈，三顾臣于草庐之中，咨臣以当世之事，由是感激，遂许先帝以驱驰。后值倾覆，受任于败军之际，奉命于危难之间，尔来二十有一年矣。先帝知臣谨慎，故临崩寄臣以大事也。受命以来，夙夜忧叹，恐托付不效，以伤先帝之明，故五月渡泸，深入不毛。今南方已定，兵甲已足，当奖率三军，北定中原，庶竭驽钝，攘除奸凶，兴复汉室，还于旧都。此臣所以报先帝而忠陛下之职分也。至于斟酌损益，进尽忠言，则攸之、祎、允之任也。愿陛下托臣以讨贼兴复之效，不效，则治臣之罪，以告先帝之灵。若无兴德之言，则责攸之、祎、允等之慢，以彰其咎；陛下亦宜自谋，以咨诹善道，察纳雅言，深追先帝遗诏，臣不胜受恩感激。今当远离，临表涕零，不知所言。</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>【kubernetes】如何Debug Kubernetes源码</title>
+    <url>/2023/10/22/kubernetes/%E5%A6%82%E4%BD%95Debug%20Kubernetes%E6%BA%90%E7%A0%81/</url>
+    <content><![CDATA[<h2 id="前置步骤"><a href="#前置步骤" class="headerlink" title="前置步骤"></a>前置步骤</h2><ul>
+<li>准备一台虚拟机（本来准备本地跑一跑，但是kubelet不支持Darwin，无奈Fusion运行一台centos7），需要安装golang环境</li>
+<li>准备kubernets源码，本地和虚拟机中的要一致，本文以1.24.0分支为主，kubernetes的源码最好放在<code>k8s.io</code>下，如<code>/root/go/src/k8s.io/kubernetes</code></li>
+</ul>
+<h2 id="虚拟机安装"><a href="#虚拟机安装" class="headerlink" title="虚拟机安装"></a>虚拟机安装</h2><h3 id="安装cfssl"><a href="#安装cfssl" class="headerlink" title="安装cfssl"></a>安装cfssl</h3><p>需要安装cfssl和cfssljson，记得放到PATH下面。<br><a class="link"   href="https://github.com/cloudflare/cfssl/releases" >cfssl二进制文件 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="安装containerd"><a href="#安装containerd" class="headerlink" title="安装containerd"></a>安装containerd</h3><p>安装containerd，需要启动containerd。<br><a class="link"   href="https://github.com/containerd/containerd/blob/main/docs/getting-started.md" >containerd安装步骤 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="安装kubectl"><a href="#安装kubectl" class="headerlink" title="安装kubectl"></a>安装kubectl</h3><p>方便后面操作集群资源。</p>
+<h3 id="安装etcd"><a href="#安装etcd" class="headerlink" title="安装etcd"></a>安装etcd</h3><p>在kubernetes的hack目录下，有安装脚本，可以执行安装;</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /root/go/src/k8s.io/kubernetes</span><br><span class="line">./hack/install-etcd.sh </span><br></pre></td></tr></table></figure></div>
+
+<h3 id="修改打包参数"><a href="#修改打包参数" class="headerlink" title="修改打包参数"></a>修改打包参数</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./hack/lib/golang.sh</span><br><span class="line"></span><br><span class="line">    gogcflags=<span class="string">&quot;all=-trimpath=<span class="variable">$&#123;trimroot&#125;</span> <span class="variable">$&#123;GOGCFLAGS:-&#125;</span>&quot;</span></span><br><span class="line">    <span class="comment"># 注释下面的行</span></span><br><span class="line">    <span class="comment">#if [[ &quot;$&#123;DBG:-&#125;&quot; == 1 ]]; then</span></span><br><span class="line">    <span class="comment">#    # Debugging - disable optimizations and inlining.</span></span><br><span class="line">    <span class="comment">#    gogcflags=&quot;$&#123;gogcflags&#125; -N -l&quot;</span></span><br><span class="line">    <span class="comment">#fi</span></span><br><span class="line">    <span class="comment"># 添加下面的行</span></span><br><span class="line">    gogcflags=<span class="string">&quot;<span class="variable">$&#123;gogcflags&#125;</span> -N -l&quot;</span></span><br><span class="line"></span><br><span class="line">    goldflags=<span class="string">&quot;all=<span class="subst">$(kube::version::ldflags)</span> <span class="variable">$&#123;GOLDFLAGS:-&#125;</span>&quot;</span></span><br><span class="line">    <span class="comment"># 注释下面的行</span></span><br><span class="line">    <span class="comment">#if [[ &quot;$&#123;DBG:-&#125;&quot; != 1 ]]; then</span></span><br><span class="line">    <span class="comment">#    # Not debugging - disable symbols and DWARF.</span></span><br><span class="line">    <span class="comment">#    goldflags=&quot;$&#123;goldflags&#125; -s -w&quot;</span></span><br><span class="line">    <span class="comment">#fi</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="安装dlv"><a href="#安装dlv" class="headerlink" title="安装dlv"></a>安装dlv</h3><p>dlv是golang的debug的工具，详细可以参考<a class="link"   href="https://github.com/go-delve/delve/tree/master/Documentation/usage" >文档 <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">go install github.com/go-delve/delve/cmd/dlv@latest</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="Debug步骤"><a href="#Debug步骤" class="headerlink" title="Debug步骤"></a>Debug步骤</h2><h3 id="在虚拟机中运行本地集群"><a href="#在虚拟机中运行本地集群" class="headerlink" title="在虚拟机中运行本地集群"></a>在虚拟机中运行本地集群</h3><p><code>hack</code>目录中的<code>local-up-cluster.sh</code>可以直接运行单节点本地集群，如果修改了代码进行调试，记得执行<code>make clean</code>。</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">./hack/local-up-cluster.sh </span><br></pre></td></tr></table></figure></div>
+<p>等待一段时间后，可以使用kubectl验证一下集群是否正常启动成功:</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ <span class="built_in">export</span> KUBECONFIG=/var/run/kubernetes/admin.kubeconfig</span><br><span class="line">$ kubectl  cluster-info </span><br><span class="line">Kubernetes control plane is running at https://localhost:6443/</span><br><span class="line">CoreDNS is running at https://localhost:6443//api/v1/namespaces/kube-system/services/kube-dns:dns/proxy</span><br></pre></td></tr></table></figure></div>
+
+
+<p>这里以<code>debug apiserver</code>举例，其他的组件类似。</p>
+<h3 id="dlv重新运行apiserver"><a href="#dlv重新运行apiserver" class="headerlink" title="dlv重新运行apiserver"></a>dlv重新运行apiserver</h3><p>找到apiserver的进程，使用<code>kill</code>命令将apiserver进程kill掉，使用<code>dlv</code>运行apiserver。</p>
+<div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ ps axu|grep kube-apiserver</span><br><span class="line">$ <span class="built_in">kill</span> -9 PID</span><br><span class="line">$ dlv <span class="built_in">exec</span> /root/go/src/k8s.io/kubernetes/_output/local/bin/linux/amd64/kube-apiserver --headless --listen=:2345 --api-version=2 --accept-multiclient -- --authorization-mode=Node,RBAC  --cloud-provider= --cloud-config=   --v=3 --vmodule= --audit-policy-file=/tmp/kube-audit-policy-file --audit-log-path=/tmp/kube-apiserver-audit.log --authorization-webhook-config-file= --authentication-token-webhook-config-file= --cert-dir=/var/run/kubernetes --egress-selector-config-file=/tmp/kube_egress_selector_configuration.yaml --client-ca-file=/var/run/kubernetes/client-ca.crt --kubelet-client-certificate=/var/run/kubernetes/client-kube-apiserver.crt --kubelet-client-key=/var/run/kubernetes/client-kube-apiserver.key --service-account-key-file=/tmp/kube-serviceaccount.key --service-account-lookup=<span class="literal">true</span> --service-account-issuer=https://kubernetes.default.svc --service-account-jwks-uri=https://kubernetes.default.svc/openid/v1/jwks --service-account-signing-key-file=/tmp/kube-serviceaccount.key --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,DefaultStorageClass,DefaultTolerationSeconds,Priority,MutatingAdmissionWebhook,ValidatingAdmissionWebhook,ResourceQuota,NodeRestriction --disable-admission-plugins= --admission-control-config-file= --bind-address=0.0.0.0 --secure-port=6443 --tls-cert-file=/var/run/kubernetes/serving-kube-apiserver.crt --tls-private-key-file=/var/run/kubernetes/serving-kube-apiserver.key --storage-backend=etcd3 --storage-media-type=application/vnd.kubernetes.protobuf --etcd-servers=http://127.0.0.1:2379 --service-cluster-ip-range=10.0.0.0/24 --feature-gates=AllAlpha=<span class="literal">false</span> --external-hostname=localhost --requestheader-username-headers=X-Remote-User --requestheader-group-headers=X-Remote-Group --requestheader-extra-headers-prefix=X-Remote-Extra- --requestheader-client-ca-file=/var/run/kubernetes/request-header-ca.crt --requestheader-allowed-names=system:auth-proxy --proxy-client-cert-file=/var/run/kubernetes/client-auth-proxy.crt --proxy-client-key-file=/var/run/kubernetes/client-auth-proxy.key --cors-allowed-origins=<span class="string">&quot;/127.0.0.1(:[0-9]+)?$,/localhost(:[0-9]+)?$&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="使用goland连接"><a href="#使用goland连接" class="headerlink" title="使用goland连接"></a>使用goland连接</h3><p>配置goland，连接dlv服务端<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/kubernetes/apiserver-debug.png"
+                      alt="apiserver-debug"
+                ><br>设置断点，启动debug，就可以愉快的Debug了。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/kubernetes/apiserver-main-debug.png"
+                      alt="apiserver-main-debug"
+                ></p>
+]]></content>
+      <categories>
+        <category>kubernetes</category>
+      </categories>
+      <tags>
+        <tag>kubernetes</tag>
+      </tags>
+  </entry>
+</search>
