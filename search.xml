@@ -9,6 +9,38 @@
 ]]></content>
   </entry>
   <entry>
+    <title>基本排序</title>
+    <url>/2023/12/11/algorithm/%E5%9F%BA%E6%9C%AC%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BubbleSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="built_in">len</span>(s) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">		<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; i; j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> s[j] &gt; s[j+<span class="number">1</span>] &#123;</span><br><span class="line">				s[j], s[j+<span class="number">1</span>] = s[j+<span class="number">1</span>], s[j]</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SelectionSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">		curMinIdx := i</span><br><span class="line">		<span class="keyword">for</span> j := i; j &lt; <span class="built_in">len</span>(s); j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> s[j] &lt; s[curMinIdx] &#123;</span><br><span class="line">				curMinIdx = j</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		s[i], s[curMinIdx] = s[curMinIdx], s[i]</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InsertionSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> ; i &gt; <span class="number">0</span> &amp;&amp; s[i<span class="number">-1</span>] &gt; s[i]; i-- &#123;</span><br><span class="line">			s[i<span class="number">-1</span>], s[i] = s[i], s[i<span class="number">-1</span>]</span><br><span class="line">			fmt.Println(s)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>algorithm</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>输出二进制的字符串</title>
+    <url>/2023/12/11/algorithm/%E8%BE%93%E5%87%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>给一个数字，输出其二进制的字符串，这里我们使用 golang 中的<code>int32</code>举例：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 20 -&gt; 00000000000000000000000000010100  最高为符号位，0为正数，1为负数</span><br><span class="line">// -1 -&gt; 11111111111111111111111111111111  负数等于后31位取反+1</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>将 1 进行左移，一共进行 32 次，每次都和 num 进行与运算，如果是 0 则 num 的 i 位就是 0，否则就是 1。</p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PrintBinaryString</span><span class="params">(num <span class="type">int32</span>)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> str <span class="type">string</span></span><br><span class="line">	<span class="keyword">var</span> c <span class="type">int32</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">32</span>; i++ &#123;</span><br><span class="line">		c = <span class="number">1</span> &lt;&lt; i</span><br><span class="line">		<span class="keyword">if</span> num&amp;c != <span class="number">0</span> &#123;</span><br><span class="line">			str = <span class="string">&quot;1&quot;</span> + str</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			str = <span class="string">&quot;0&quot;</span> + str</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> str</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>algorithm</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>【kubernetes】如何Debug Kubernetes源码</title>
     <url>/2023/10/22/kubernetes/%E5%A6%82%E4%BD%95Debug%20Kubernetes%E6%BA%90%E7%A0%81/</url>
     <content><![CDATA[<h2 id="前置步骤"><a href="#前置步骤" class="headerlink" title="前置步骤"></a>前置步骤</h2><ul>
@@ -56,7 +88,40 @@
       </tags>
   </entry>
   <entry>
-    <title>post</title>
+    <title>求数组的n到m项的和</title>
+    <url>/2023/12/11/algorithm/%E6%B1%82%E6%95%B0%E7%BB%84%E7%9A%84n%E5%88%B0m%E9%A1%B9%E7%9A%84%E5%92%8C/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>有一个数组 arr,求其 n 到 m 项的和，m&gt;&#x3D;n，比如[5, 4, -1, 10, 1, 2, 6, 9]，求其 2 到 7 项的和，即-1+10+1+2+6+9&#x3D;27。</p>
+<h2 id="解法-1"><a href="#解法-1" class="headerlink" title="解法 1"></a>解法 1</h2><p>构建一个二维的数组，想要获取 n 到 m 项的和，直接通过索引获取即可，改方法的好处就是构建一次二维数组，后续查找 n 到 m 项的和的复杂度位 1，也不需要进行额外的计算了。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/algorithm/n2msumway1.png"
+                      alt="n2msumway1"
+                ></p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">n2mSumWay1</span><span class="params">(arr []<span class="type">int64</span>, n, m <span class="type">int64</span>)</span></span> <span class="type">int64</span> &#123;</span><br><span class="line">	table := <span class="built_in">make</span>([][]<span class="type">int64</span>, <span class="number">0</span>, <span class="built_in">len</span>(arr))</span><br><span class="line">	<span class="keyword">for</span> i1, v1 := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		row := <span class="built_in">make</span>([]<span class="type">int64</span>, <span class="number">0</span>, <span class="built_in">len</span>(arr))</span><br><span class="line">		<span class="keyword">for</span> i2, v2 := <span class="keyword">range</span> arr &#123;</span><br><span class="line">			<span class="keyword">if</span> i2 == i1 &#123;</span><br><span class="line">				row = <span class="built_in">append</span>(row, v1)</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> i2 &gt; i1 &#123;</span><br><span class="line">				row = <span class="built_in">append</span>(row, v2+row[i2<span class="number">-1</span>])</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				row = <span class="built_in">append</span>(row, <span class="number">0</span>)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		table = <span class="built_in">append</span>(table, row)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> m &lt; n &#123;</span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">&quot;请输入合法的m和n，m必须大于等于n&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> table[n][m]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="解法-2"><a href="#解法-2" class="headerlink" title="解法 2"></a>解法 2</h2><p>构建一个前缀和数组 preArr</p>
+<ul>
+<li>如果 n 是 0，获取 n 到 m 的和，返回该前缀和数组的第 m 项的值</li>
+<li>如果 n 不是 0，获取 n 到 m 的和，返回 preArr[m]-preArr[n-1]的值</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/algorithm/n2msumway2.png"
+                      alt="n2msumway2"
+                ></p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">n2mSumWay2</span><span class="params">(arr []<span class="type">int64</span>, n, m <span class="type">int64</span>)</span></span> <span class="type">int64</span> &#123;</span><br><span class="line">	preArr := <span class="built_in">make</span>([]<span class="type">int64</span>, <span class="number">0</span>, <span class="built_in">len</span>(arr))</span><br><span class="line">	<span class="keyword">for</span> i, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		<span class="keyword">if</span> i == <span class="number">0</span> &#123;</span><br><span class="line">			preArr = <span class="built_in">append</span>(preArr, v)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			preArr = <span class="built_in">append</span>(preArr, preArr[i<span class="number">-1</span>]+v)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> n &gt; m &#123;</span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">&quot;请输入合法的m和n，m必须大于等于n&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> n == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> preArr[m]</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> preArr[m] - preArr[n<span class="number">-1</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>algorithm</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【网络】容器网络基础实践</title>
     <url>/2024/02/26/network/%E3%80%90%E7%BD%91%E7%BB%9C%E3%80%91%E5%AE%B9%E5%99%A8%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E5%AE%9E%E8%B7%B5/</url>
     <content><![CDATA[<h2 id="Namespace"><a href="#Namespace" class="headerlink" title="Namespace"></a>Namespace</h2><p>容器技术中的 Namespace 是 Linux 内核的一个功能，它使得容器可以在同一主机上共享同一系统资源，但是各自拥有独立的视图和感知，从而可以实现容器的隔离和安全性。Namespace 分为以下几种类型：</p>
 <p>Mount Namespace（挂载命名空间）：每个容器都有自己的挂载命名空间，可以独立挂载文件系统，使得容器之间不会影响到其他容器的文件系统。一个容器的挂载命名空间改变不会影响到其他容器的挂载命名空间。</p>
@@ -146,71 +211,6 @@
       </categories>
       <tags>
         <tag>network</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>基本排序</title>
-    <url>/2023/12/11/algorithm/%E5%9F%BA%E6%9C%AC%E6%8E%92%E5%BA%8F/</url>
-    <content><![CDATA[<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BubbleSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="built_in">len</span>(s) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">		<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; i; j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> s[j] &gt; s[j+<span class="number">1</span>] &#123;</span><br><span class="line">				s[j], s[j+<span class="number">1</span>] = s[j+<span class="number">1</span>], s[j]</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SelectionSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">		curMinIdx := i</span><br><span class="line">		<span class="keyword">for</span> j := i; j &lt; <span class="built_in">len</span>(s); j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> s[j] &lt; s[curMinIdx] &#123;</span><br><span class="line">				curMinIdx = j</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		s[i], s[curMinIdx] = s[curMinIdx], s[i]</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InsertionSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> ; i &gt; <span class="number">0</span> &amp;&amp; s[i<span class="number">-1</span>] &gt; s[i]; i-- &#123;</span><br><span class="line">			s[i<span class="number">-1</span>], s[i] = s[i], s[i<span class="number">-1</span>]</span><br><span class="line">			fmt.Println(s)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-]]></content>
-      <categories>
-        <category>algorithm</category>
-      </categories>
-      <tags>
-        <tag>algorithm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>求数组的n到m项的和</title>
-    <url>/2023/12/11/algorithm/%E6%B1%82%E6%95%B0%E7%BB%84%E7%9A%84n%E5%88%B0m%E9%A1%B9%E7%9A%84%E5%92%8C/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>有一个数组 arr,求其 n 到 m 项的和，m&gt;&#x3D;n，比如[5, 4, -1, 10, 1, 2, 6, 9]，求其 2 到 7 项的和，即-1+10+1+2+6+9&#x3D;27。</p>
-<h2 id="解法-1"><a href="#解法-1" class="headerlink" title="解法 1"></a>解法 1</h2><p>构建一个二维的数组，想要获取 n 到 m 项的和，直接通过索引获取即可，改方法的好处就是构建一次二维数组，后续查找 n 到 m 项的和的复杂度位 1，也不需要进行额外的计算了。</p>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/algorithm/n2msumway1.png"
-                      alt="n2msumway1"
-                ></p>
-<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">n2mSumWay1</span><span class="params">(arr []<span class="type">int64</span>, n, m <span class="type">int64</span>)</span></span> <span class="type">int64</span> &#123;</span><br><span class="line">	table := <span class="built_in">make</span>([][]<span class="type">int64</span>, <span class="number">0</span>, <span class="built_in">len</span>(arr))</span><br><span class="line">	<span class="keyword">for</span> i1, v1 := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		row := <span class="built_in">make</span>([]<span class="type">int64</span>, <span class="number">0</span>, <span class="built_in">len</span>(arr))</span><br><span class="line">		<span class="keyword">for</span> i2, v2 := <span class="keyword">range</span> arr &#123;</span><br><span class="line">			<span class="keyword">if</span> i2 == i1 &#123;</span><br><span class="line">				row = <span class="built_in">append</span>(row, v1)</span><br><span class="line">			&#125; <span class="keyword">else</span> <span class="keyword">if</span> i2 &gt; i1 &#123;</span><br><span class="line">				row = <span class="built_in">append</span>(row, v2+row[i2<span class="number">-1</span>])</span><br><span class="line">			&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">				row = <span class="built_in">append</span>(row, <span class="number">0</span>)</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		table = <span class="built_in">append</span>(table, row)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">if</span> m &lt; n &#123;</span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">&quot;请输入合法的m和n，m必须大于等于n&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> table[n][m]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="解法-2"><a href="#解法-2" class="headerlink" title="解法 2"></a>解法 2</h2><p>构建一个前缀和数组 preArr</p>
-<ul>
-<li>如果 n 是 0，获取 n 到 m 的和，返回该前缀和数组的第 m 项的值</li>
-<li>如果 n 不是 0，获取 n 到 m 的和，返回 preArr[m]-preArr[n-1]的值</li>
-</ul>
-<p><img  
-                     lazyload
-                     src="/images/loading.svg"
-                     data-src="/images/algorithm/n2msumway2.png"
-                      alt="n2msumway2"
-                ></p>
-<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">n2mSumWay2</span><span class="params">(arr []<span class="type">int64</span>, n, m <span class="type">int64</span>)</span></span> <span class="type">int64</span> &#123;</span><br><span class="line">	preArr := <span class="built_in">make</span>([]<span class="type">int64</span>, <span class="number">0</span>, <span class="built_in">len</span>(arr))</span><br><span class="line">	<span class="keyword">for</span> i, v := <span class="keyword">range</span> arr &#123;</span><br><span class="line">		<span class="keyword">if</span> i == <span class="number">0</span> &#123;</span><br><span class="line">			preArr = <span class="built_in">append</span>(preArr, v)</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			preArr = <span class="built_in">append</span>(preArr, preArr[i<span class="number">-1</span>]+v)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> n &gt; m &#123;</span><br><span class="line">		<span class="built_in">panic</span>(<span class="string">&quot;请输入合法的m和n，m必须大于等于n&quot;</span>)</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span> n == <span class="number">0</span> &#123;</span><br><span class="line">		<span class="keyword">return</span> preArr[m]</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> preArr[m] - preArr[n<span class="number">-1</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-]]></content>
-      <categories>
-        <category>algorithm</category>
-      </categories>
-      <tags>
-        <tag>algorithm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>输出二进制的字符串</title>
-    <url>/2023/12/11/algorithm/%E8%BE%93%E5%87%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>给一个数字，输出其二进制的字符串，这里我们使用 golang 中的<code>int32</code>举例：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 20 -&gt; 00000000000000000000000000010100  最高为符号位，0为正数，1为负数</span><br><span class="line">// -1 -&gt; 11111111111111111111111111111111  负数等于后31位取反+1</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>将 1 进行左移，一共进行 32 次，每次都和 num 进行与运算，如果是 0 则 num 的 i 位就是 0，否则就是 1。</p>
-<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PrintBinaryString</span><span class="params">(num <span class="type">int32</span>)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> str <span class="type">string</span></span><br><span class="line">	<span class="keyword">var</span> c <span class="type">int32</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">32</span>; i++ &#123;</span><br><span class="line">		c = <span class="number">1</span> &lt;&lt; i</span><br><span class="line">		<span class="keyword">if</span> num&amp;c != <span class="number">0</span> &#123;</span><br><span class="line">			str = <span class="string">&quot;1&quot;</span> + str</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			str = <span class="string">&quot;0&quot;</span> + str</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> str</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-]]></content>
-      <categories>
-        <category>algorithm</category>
-      </categories>
-      <tags>
-        <tag>algorithm</tag>
       </tags>
   </entry>
 </search>
