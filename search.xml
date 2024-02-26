@@ -9,38 +9,6 @@
 ]]></content>
   </entry>
   <entry>
-    <title>基本排序</title>
-    <url>/2023/12/11/algorithm/%E5%9F%BA%E6%9C%AC%E6%8E%92%E5%BA%8F/</url>
-    <content><![CDATA[<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BubbleSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="built_in">len</span>(s) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">		<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; i; j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> s[j] &gt; s[j+<span class="number">1</span>] &#123;</span><br><span class="line">				s[j], s[j+<span class="number">1</span>] = s[j+<span class="number">1</span>], s[j]</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SelectionSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">		curMinIdx := i</span><br><span class="line">		<span class="keyword">for</span> j := i; j &lt; <span class="built_in">len</span>(s); j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> s[j] &lt; s[curMinIdx] &#123;</span><br><span class="line">				curMinIdx = j</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		s[i], s[curMinIdx] = s[curMinIdx], s[i]</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InsertionSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> ; i &gt; <span class="number">0</span> &amp;&amp; s[i<span class="number">-1</span>] &gt; s[i]; i-- &#123;</span><br><span class="line">			s[i<span class="number">-1</span>], s[i] = s[i], s[i<span class="number">-1</span>]</span><br><span class="line">			fmt.Println(s)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-]]></content>
-      <categories>
-        <category>algorithm</category>
-      </categories>
-      <tags>
-        <tag>algorithm</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>输出二进制的字符串</title>
-    <url>/2023/12/11/algorithm/%E8%BE%93%E5%87%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
-    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>给一个数字，输出其二进制的字符串，这里我们使用 golang 中的<code>int32</code>举例：</p>
-<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 20 -&gt; 00000000000000000000000000010100  最高为符号位，0为正数，1为负数</span><br><span class="line">// -1 -&gt; 11111111111111111111111111111111  负数等于后31位取反+1</span><br></pre></td></tr></table></figure></div>
-
-<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>将 1 进行左移，一共进行 32 次，每次都和 num 进行与运算，如果是 0 则 num 的 i 位就是 0，否则就是 1。</p>
-<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PrintBinaryString</span><span class="params">(num <span class="type">int32</span>)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> str <span class="type">string</span></span><br><span class="line">	<span class="keyword">var</span> c <span class="type">int32</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">32</span>; i++ &#123;</span><br><span class="line">		c = <span class="number">1</span> &lt;&lt; i</span><br><span class="line">		<span class="keyword">if</span> num&amp;c != <span class="number">0</span> &#123;</span><br><span class="line">			str = <span class="string">&quot;1&quot;</span> + str</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			str = <span class="string">&quot;0&quot;</span> + str</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> str</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
-]]></content>
-      <categories>
-        <category>algorithm</category>
-      </categories>
-      <tags>
-        <tag>algorithm</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>【kubernetes】如何Debug Kubernetes源码</title>
     <url>/2023/10/22/kubernetes/%E5%A6%82%E4%BD%95Debug%20Kubernetes%E6%BA%90%E7%A0%81/</url>
     <content><![CDATA[<h2 id="前置步骤"><a href="#前置步骤" class="headerlink" title="前置步骤"></a>前置步骤</h2><ul>
@@ -88,6 +56,22 @@
       </tags>
   </entry>
   <entry>
+    <title>基本排序</title>
+    <url>/2023/12/11/algorithm/%E5%9F%BA%E6%9C%AC%E6%8E%92%E5%BA%8F/</url>
+    <content><![CDATA[<h2 id="冒泡排序"><a href="#冒泡排序" class="headerlink" title="冒泡排序"></a>冒泡排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">BubbleSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="built_in">len</span>(s) - <span class="number">1</span>; i &gt;= <span class="number">0</span>; i-- &#123;</span><br><span class="line">		<span class="keyword">for</span> j := <span class="number">0</span>; j &lt; i; j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> s[j] &gt; s[j+<span class="number">1</span>] &#123;</span><br><span class="line">				s[j], s[j+<span class="number">1</span>] = s[j+<span class="number">1</span>], s[j]</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="选择排序"><a href="#选择排序" class="headerlink" title="选择排序"></a>选择排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">SelectionSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">		curMinIdx := i</span><br><span class="line">		<span class="keyword">for</span> j := i; j &lt; <span class="built_in">len</span>(s); j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> s[j] &lt; s[curMinIdx] &#123;</span><br><span class="line">				curMinIdx = j</span><br><span class="line">			&#125;</span><br><span class="line">		&#125;</span><br><span class="line">		s[i], s[curMinIdx] = s[curMinIdx], s[i]</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="插入排序"><a href="#插入排序" class="headerlink" title="插入排序"></a>插入排序</h2><div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">InsertionSort</span><span class="params">(s []<span class="type">int64</span>)</span></span> []<span class="type">int64</span> &#123;</span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="built_in">len</span>(s); i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> ; i &gt; <span class="number">0</span> &amp;&amp; s[i<span class="number">-1</span>] &gt; s[i]; i-- &#123;</span><br><span class="line">			s[i<span class="number">-1</span>], s[i] = s[i], s[i<span class="number">-1</span>]</span><br><span class="line">			fmt.Println(s)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>algorithm</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>求数组的n到m项的和</title>
     <url>/2023/12/11/algorithm/%E6%B1%82%E6%95%B0%E7%BB%84%E7%9A%84n%E5%88%B0m%E9%A1%B9%E7%9A%84%E5%92%8C/</url>
     <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>有一个数组 arr,求其 n 到 m 项的和，m&gt;&#x3D;n，比如[5, 4, -1, 10, 1, 2, 6, 9]，求其 2 到 7 项的和，即-1+10+1+2+6+9&#x3D;27。</p>
@@ -118,6 +102,94 @@
       </categories>
       <tags>
         <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>输出二进制的字符串</title>
+    <url>/2023/12/11/algorithm/%E8%BE%93%E5%87%BA%E4%BA%8C%E8%BF%9B%E5%88%B6%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    <content><![CDATA[<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>给一个数字，输出其二进制的字符串，这里我们使用 golang 中的<code>int32</code>举例：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">// 20 -&gt; 00000000000000000000000000010100  最高为符号位，0为正数，1为负数</span><br><span class="line">// -1 -&gt; 11111111111111111111111111111111  负数等于后31位取反+1</span><br></pre></td></tr></table></figure></div>
+
+<h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>将 1 进行左移，一共进行 32 次，每次都和 num 进行与运算，如果是 0 则 num 的 i 位就是 0，否则就是 1。</p>
+<div class="highlight-container" data-rel="Go"><figure class="iseeu highlight go"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">func</span> <span class="title">PrintBinaryString</span><span class="params">(num <span class="type">int32</span>)</span></span> <span class="type">string</span> &#123;</span><br><span class="line">	<span class="keyword">var</span> str <span class="type">string</span></span><br><span class="line">	<span class="keyword">var</span> c <span class="type">int32</span></span><br><span class="line">	<span class="keyword">for</span> i := <span class="number">0</span>; i &lt; <span class="number">32</span>; i++ &#123;</span><br><span class="line">		c = <span class="number">1</span> &lt;&lt; i</span><br><span class="line">		<span class="keyword">if</span> num&amp;c != <span class="number">0</span> &#123;</span><br><span class="line">			str = <span class="string">&quot;1&quot;</span> + str</span><br><span class="line">		&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">			str = <span class="string">&quot;0&quot;</span> + str</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> str</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>algorithm</category>
+      </categories>
+      <tags>
+        <tag>algorithm</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【redis】BigKey</title>
+    <url>/2024/02/26/redis/%E3%80%90redis%E3%80%91BigKey/</url>
+    <content><![CDATA[<h2 id="Morekey-案列"><a href="#Morekey-案列" class="headerlink" title="Morekey 案列"></a>Morekey 案列</h2><h3 id="面试题引入"><a href="#面试题引入" class="headerlink" title="面试题引入"></a>面试题引入</h3><ul>
+<li>阿里广告平台，海量数据里查询某一固定的前缀的 key</li>
+<li>小红书，你如何生产上限制 keys *&#x2F;flushdb&#x2F;flushall 等危险命令以防止误删误用?</li>
+<li>美团，MEMORY USAGE 命令你用过吗?</li>
+<li>BigKey 问题，多大算 big?你如何发现?如何删除?如何处理?</li>
+<li>BigKey 你做过调优吗?惰性释放 lazyfree。了解过吗?</li>
+<li>Morekey 问题，生产上 redis 数据库有 1000W 记录，你如何遍历?key*可以吗?</li>
+</ul>
+<h3 id="批量插入数据"><a href="#批量插入数据" class="headerlink" title="批量插入数据"></a>批量插入数据</h3><div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">for((i=1;i&lt;=100*10000;i++)); do echo &quot;set k$i v$i&quot; &gt;&gt; /tmp/redisTest.txt ;done;</span><br><span class="line">cat /tmp/redisTest.txt | redis-cli --pipe</span><br><span class="line"></span><br><span class="line">redis-cli</span><br><span class="line">127.0.0.1:6379&gt; DBSIZE</span><br><span class="line">(integer) 1000000</span><br></pre></td></tr></table></figure></div>
+
+<p>当执行<code>keys *</code>的时候花费了</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">1000000) &quot;k634210&quot;</span><br><span class="line">(7.01s)</span><br></pre></td></tr></table></figure></div>
+
+<p>生产环境限制 keys *&#x2F; flushdb &#x2F; flushall 等危险命令以防止误删除，修改 redis.conf</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">rename-command keys &quot;&quot;</span><br><span class="line">rename-command flushdb &quot;&quot;</span><br><span class="line">rename-command flushall &quot;&quot;</span><br></pre></td></tr></table></figure></div>
+
+<h3 id="不用-keys，那用什么"><a href="#不用-keys，那用什么" class="headerlink" title="不用 keys，那用什么?"></a>不用 keys，那用什么?</h3><p>scan 命令，Redis 的 SCAN 命令是在大数据量的场景下优化对 Redis 键空间的遍历的命令，可以逐步地将所有的键迭代出来，它主要用来实现对 Redis 数据集的持续和渐进式的遍历。<br>常见的用法如下：</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">SCAN cursor [MATCH pattern] [COUNT count]</span><br></pre></td></tr></table></figure></div>
+
+<p>cursor：游标，初始值为 0，之后每次调用 SCAN 返回的新游标值，用于标识遍历的当前位置。<br>MATCH pattern：可选项，匹配符合指定模式的键。<br>COUNT count：可选项，每次返回的元素数量，Redis 默认为 10 个。</p>
+<p>而当服务器向用户返回值为 0 的游标时， 表示迭代已结束。</p>
+<div class="highlight-container" data-rel="R"><figure class="iseeu highlight r"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span>.0.1<span class="operator">:</span><span class="number">6379</span><span class="operator">&gt;</span> SCAN <span class="number">0</span>  MATCH <span class="operator">*</span> COUNT <span class="number">5</span></span><br><span class="line"><span class="number">1</span><span class="punctuation">)</span> <span class="string">&quot;458752&quot;</span></span><br><span class="line"><span class="number">2</span><span class="punctuation">)</span> <span class="number">1</span><span class="punctuation">)</span> <span class="string">&quot;k302634&quot;</span></span><br><span class="line">   <span class="number">2</span><span class="punctuation">)</span> <span class="string">&quot;k430755&quot;</span></span><br><span class="line">   <span class="number">3</span><span class="punctuation">)</span> <span class="string">&quot;k714111&quot;</span></span><br><span class="line">   <span class="number">4</span><span class="punctuation">)</span> <span class="string">&quot;k231894&quot;</span></span><br><span class="line">   <span class="number">5</span><span class="punctuation">)</span> <span class="string">&quot;k776289&quot;</span></span><br><span class="line"><span class="number">127.0</span>.0.1<span class="operator">:</span><span class="number">6379</span><span class="operator">&gt;</span></span><br><span class="line"><span class="number">127.0</span>.0.1<span class="operator">:</span><span class="number">6379</span><span class="operator">&gt;</span> SCAN <span class="number">458752</span> MATCH <span class="operator">*</span> COUNT <span class="number">5</span></span><br><span class="line"><span class="number">1</span><span class="punctuation">)</span> <span class="string">&quot;32768&quot;</span></span><br><span class="line"><span class="number">2</span><span class="punctuation">)</span> <span class="number">1</span><span class="punctuation">)</span> <span class="string">&quot;k313913&quot;</span></span><br><span class="line">   <span class="number">2</span><span class="punctuation">)</span> <span class="string">&quot;k142341&quot;</span></span><br><span class="line">   <span class="number">3</span><span class="punctuation">)</span> <span class="string">&quot;k549873&quot;</span></span><br><span class="line">   <span class="number">4</span><span class="punctuation">)</span> <span class="string">&quot;k78244&quot;</span></span><br><span class="line">   <span class="number">5</span><span class="punctuation">)</span> <span class="string">&quot;k598951&quot;</span></span><br><span class="line">   <span class="number">6</span><span class="punctuation">)</span> <span class="string">&quot;k413095&quot;</span></span><br><span class="line"><span class="number">127.0</span>.0.1<span class="operator">:</span><span class="number">6379</span><span class="operator">&gt;</span> SCAN <span class="number">32768</span>  MATCH <span class="operator">*</span> COUNT <span class="number">5</span></span><br><span class="line"><span class="number">1</span><span class="punctuation">)</span> <span class="string">&quot;163840&quot;</span></span><br><span class="line"><span class="number">2</span><span class="punctuation">)</span> <span class="number">1</span><span class="punctuation">)</span> <span class="string">&quot;k125427&quot;</span></span><br><span class="line">   <span class="number">2</span><span class="punctuation">)</span> <span class="string">&quot;k378551&quot;</span></span><br><span class="line">   <span class="number">3</span><span class="punctuation">)</span> <span class="string">&quot;k516756&quot;</span></span><br><span class="line">   <span class="number">4</span><span class="punctuation">)</span> <span class="string">&quot;k235141&quot;</span></span><br><span class="line">   <span class="number">5</span><span class="punctuation">)</span> <span class="string">&quot;k380212&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>其他的还有:</p>
+<ul>
+<li>SSCAN 命令用于迭代 SET 集合中的元素。</li>
+<li>HSCAN 命令用于迭代 Hash 类型中的键值对。</li>
+<li>ZSCAN 命令用于迭代 SortSet 集合中的元素和元素对应的分值</li>
+</ul>
+<h2 id="Bigkey-案列"><a href="#Bigkey-案列" class="headerlink" title="Bigkey 案列"></a>Bigkey 案列</h2><h3 id="多大算-big"><a href="#多大算-big" class="headerlink" title="多大算 big?"></a>多大算 big?</h3><p>参考阿里云 redis 开发规范</p>
+<ul>
+<li>string 是 value，最大 512MB，但是&gt;&#x3D;10KB 就是 bigkey</li>
+<li>list\hash\set\zset，个数超过 5000 就是 bigkey</li>
+</ul>
+<h3 id="带来的危害"><a href="#带来的危害" class="headerlink" title="带来的危害?"></a>带来的危害?</h3><ul>
+<li>内存不均匀、集群迁移困难</li>
+<li>超时删除，大 key 删除作梗</li>
+<li>网络流量阻塞</li>
+</ul>
+<h3 id="如何产生的"><a href="#如何产生的" class="headerlink" title="如何产生的"></a>如何产生的</h3><ul>
+<li>比如粉丝列表逐步上升</li>
+</ul>
+<h3 id="如何发现"><a href="#如何发现" class="headerlink" title="如何发现"></a>如何发现</h3><ul>
+<li>redis-cli –bigkeys</li>
+</ul>
+<div class="highlight-container" data-rel="R"><figure class="iseeu highlight r"><table><tr><td class="code"><pre><span class="line"><span class="comment"># redis-cli --bigkeys</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Scanning the entire keyspace to find biggest keys as well as</span></span><br><span class="line"><span class="comment"># average sizes per key type.  You can use -i 0.1 to sleep 0.1 sec</span></span><br><span class="line"><span class="comment"># per 100 SCAN commands (not usually needed).</span></span><br><span class="line"></span><br><span class="line"><span class="punctuation">[</span><span class="number">00.00</span><span class="operator">%] Biggest string found so far &#x27;&quot;k302634&quot;&#x27; with 7 bytes</span></span><br><span class="line"><span class="operator">[19.85%</span><span class="punctuation">]</span> Biggest string found so far <span class="string">&#x27;&quot;k1000000&quot;&#x27;</span> with <span class="number">8</span> bytes</span><br><span class="line"></span><br><span class="line"><span class="punctuation">[</span><span class="number">100.00</span><span class="operator">%] Sampled 1000000 keys so far</span></span><br><span class="line"><span class="operator"></span></span><br><span class="line"><span class="operator">-------- summary -------</span></span><br><span class="line"><span class="operator"></span></span><br><span class="line"><span class="operator">Sampled 1000000 keys in the keyspace!</span></span><br><span class="line"><span class="operator">Total key length in bytes is 6888896 (avg len 6.89)</span></span><br><span class="line"><span class="operator"></span></span><br><span class="line"><span class="operator">Biggest string found &#x27;&quot;k1000000&quot;&#x27; has 8 bytes</span></span><br><span class="line"><span class="operator"></span></span><br><span class="line"><span class="operator">0 lists with 0 items (00.00%</span> of keys<span class="punctuation">,</span> avg size <span class="number">0.00</span><span class="punctuation">)</span></span><br><span class="line"><span class="number">0</span> hashs with <span class="number">0</span> fields <span class="punctuation">(</span><span class="number">00.00</span><span class="operator">% of keys, avg size 0.00)</span></span><br><span class="line"><span class="operator">1000000 strings with 6888896 bytes (100.00%</span> of keys<span class="punctuation">,</span> avg size <span class="number">6.89</span><span class="punctuation">)</span></span><br><span class="line"><span class="number">0</span> streams with <span class="number">0</span> entries <span class="punctuation">(</span><span class="number">00.00</span><span class="operator">% of keys, avg size 0.00)</span></span><br><span class="line"><span class="operator">0 sets with 0 members (00.00%</span> of keys<span class="punctuation">,</span> avg size <span class="number">0.00</span><span class="punctuation">)</span></span><br><span class="line"><span class="number">0</span> zsets with <span class="number">0</span> members <span class="punctuation">(</span><span class="number">00.00</span>% of keys<span class="punctuation">,</span> avg size <span class="number">0.00</span><span class="punctuation">)</span></span><br></pre></td></tr></table></figure></div>
+
+<ul>
+<li>memory usage [key]</li>
+</ul>
+<div class="highlight-container" data-rel="R"><figure class="iseeu highlight r"><table><tr><td class="code"><pre><span class="line"><span class="number">127.0</span>.0.1<span class="operator">:</span><span class="number">6379</span><span class="operator">&gt;</span> MEMORY USAGE k1000000</span><br><span class="line"><span class="punctuation">(</span>integer<span class="punctuation">)</span> <span class="number">72</span></span><br></pre></td></tr></table></figure></div>
+
+<h3 id="如何删除"><a href="#如何删除" class="headerlink" title="如何删除?"></a>如何删除?</h3><ul>
+<li>String: 一般用 del，如果过于庞大用 unlink</li>
+<li>Hash：使用 hscan 每次获取少量的 field-value，再使用 hdel 删除每个 field</li>
+<li>List：使用 ltrim 渐进式删除，直到全部删除完成</li>
+<li>Set: 使用 sscan 每次获取部分元素，再使用 srem 命令删除每个元素</li>
+<li>Zset：使用 zscan 每次获取部分元素，再使用 ZREMRANGEBYRANK 删除每个元素</li>
+</ul>
+<h2 id="Bigkey-生产环境调优"><a href="#Bigkey-生产环境调优" class="headerlink" title="Bigkey 生产环境调优"></a>Bigkey 生产环境调优</h2><p>在 redis.conf 配置文件中 LAZY FREEING 相关说明</p>
+<div class="highlight-container" data-rel="Plaintext"><figure class="iseeu highlight plaintext"><table><tr><td class="code"><pre><span class="line">lazyfree-lazy-server-del yes</span><br><span class="line">replica-lazy-flush yes</span><br><span class="line">lazyfree-lazy-user-del yes</span><br></pre></td></tr></table></figure></div>
+]]></content>
+      <categories>
+        <category>redis</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
       </tags>
   </entry>
   <entry>
@@ -211,6 +283,83 @@
       </categories>
       <tags>
         <tag>network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>【redis】redis单线程VS多线程</title>
+    <url>/2024/02/26/redis/%E3%80%90redis%E3%80%91redis%E5%8D%95%E7%BA%BF%E7%A8%8BVS%E5%A4%9A%E7%BA%BF%E7%A8%8B/</url>
+    <content><![CDATA[<h2 id="面试题引入"><a href="#面试题引入" class="headerlink" title="面试题引入"></a>面试题引入</h2><ul>
+<li>redis 到底是单线程还是多线程？</li>
+<li>IO 多路复用听说过吗？</li>
+<li>redis 为什么这么快？</li>
+</ul>
+<h2 id="redis-为什么选择单线程"><a href="#redis-为什么选择单线程" class="headerlink" title="redis 为什么选择单线程"></a>redis 为什么选择单线程</h2><p>这种说法其实并不严谨，为什么这么说？<br>Redis 的版本很多 3.x、4.x、6.x，版本不同架构也是不同的，不限定版本问是否单线程也不太严谨。</p>
+<ul>
+<li>版本 3.x ，最早版本，也就是大家口口相传的 redis 是单线程；</li>
+<li>版本 4.x，严格意义来说也不是单线程，而是负责处理客户端请求的线程是单线程，但是开始加了点多线程的东西，比如异步删除</li>
+<li>2020 年 5 月版本的 6.0.x 后及 2022 年出的 7.0 版本后，告别了大家印象中的单线程，用一种全新的多线程来解决问题。<br>5.0 版本是直接升级到 6.0 版本，对于这个激进的升级，Redis 之父 antirez 表现得很有信心和兴奋，所以第一时间发文来阐述 6.0 的一些重大功能”Redis 6.0.0 GA is out!”</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/redis/redis0.png"
+                      alt="redis0"
+                ></p>
+<p>redis 单线程究竟有何意义？<br>redis 是单线程，主要是指 redis 的网络 IO 和键值对读写由一个线程来完成，redis 在处理客户端的请求包括获取(socket 读)、解析、执行、内容返回(socket 写)等都是由一个顺序串行的主线程处理，这就是所谓的单线程，也是 redis 对外提供键值存储服务的主要流程。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/redis/redis1.png"
+                      alt="redis1"
+                ></p>
+<p>但是 redis 的其他功能，比如持久化 RDB、AOF，异步删除，集群数据同步等等，其实是由额外的线程执行的，redis 命令工作线程是单线程的，但是，整个 redis 来说，是多线程的。</p>
+<p>演进：</p>
+<ol>
+<li>redis3.x 单线程时代依旧很快的主要原因</li>
+</ol>
+<ul>
+<li>基于内存操作：redis 的所有的数据都存在内存中，因此所有的运算都是内存级别的，所有他的性能比较高</li>
+<li>数据结构简单：redis 的数据结构式专门设计的，而这些简单的数据结构的查找和操作的时间大部分都是 0(1)，因此性能高</li>
+<li>多路复用和非阻塞 I&#x2F;0: redis 使用 I&#x2F;O 多路复用功能来监听多个 socket 连接客户端，这样就可以使用一个线程连接来处理多个请求，减少线程切换带来的开销，同时也比避免了 I&#x2F;O 阻塞操作</li>
+<li>避免上下文的切换：因为是单线程的模型，因此就避免了不必要的上下文切换和多线程的竞争，这就省去了多线程切换带来的时间和性能上的消耗，而且单线程不会导致死锁的问题的发生</li>
+</ul>
+<ol start="2">
+<li>redis4.0 之前一直采用单线程的主要原因</li>
+</ol>
+<ul>
+<li>作者的意思是，使用单线程模型是 redis 开发和维护更简单，</li>
+<li>即使使用单线程，也可以并发的处理多客户端的请求，主要使用 io 多路复用和非阻塞 IO</li>
+<li>对于 redis 系统来说，主要的性能瓶颈是内存或者网络带宽而并非 CPU</li>
+</ul>
+<h2 id="redis6-7-的多线程特性和-IO-多路复用"><a href="#redis6-7-的多线程特性和-IO-多路复用" class="headerlink" title="redis6&#x2F;7 的多线程特性和 IO 多路复用"></a>redis6&#x2F;7 的多线程特性和 IO 多路复用</h2><p>注意<code>对于redis主要的性能瓶颈时内存或者网络IO而并非CPU</code>.</p>
+<p>现在我们来说说网络 IO：<br>在 Redis6&#x2F;7 中，非常受关注的第一个新特性就是多线程。<br>这是因为，Redis 一直被大家熟知的就是它的单线程架构，虽然有些命令操作可以用后台线程或子进程执行（比如数据删除、快照生成、AOF 重写）。但是，从网络 IO 处理到实际的读写命令处理，都是由单个线程完成的。<br>随着网络硬件的性能提升，<strong>Redis 的性能瓶颈有时会出现在网络 IO 的处理上，也就是说，单个主线程处理网络请求的速度跟不上底层网络硬件的速度</strong>,<br>为了应对这个问题:<br><strong>采用多个 IO 线程来处理网络请求，提高网络请求处理的并行度，Redis6&#x2F;7 就是采用的这种方法。</strong><br>但是，Redis 的多 IO 线程只是用来处理网络请求的，对于<strong>读写操作命令 Redis 仍然使用单线程来处理</strong>。这是因为，Redis 处理请求时，网络处理经常是瓶颈，通过多个 IO 线程并行处理网络操作，可以提升实例的整体处理性能。而继续使用单线程执行命令操作，就不用为了保证 Lua 脚本、事务的原子性，额外开发多线程互斥加锁机制了(不管加锁操作处理)，这样一来，Redis 线程模型实现就简单了</p>
+<p>主线程和 IO 线程怎么协作完成请求的处理的?<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/redis/redis2.png"
+                      alt="redis2"
+                ></p>
+<p>最后简单的说明<br>redis 工作线程时单线程的，整个 redis 来说，是多线程的.<br>I&#x2F;O 的读和写本身是堵塞的，比如当 socket 中有数据时，Redis 会通过调用先将数据从内核态空间拷贝到用户态空间，再交给 Redis 调用，而这个拷贝的过程就是阻塞的，当数据量越大时拷贝所需要的时间就越多，而这些操作都是基于单线程完成的。<br>主线程和 IO 线程怎么协作完成请求的处理的?<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/redis/redis3.png"
+                      alt="redis3"
+                ><br>从 Redis6 开始，就新增了多线程的功能来提高 I&#x2F;O 的读写性能，他的主要实现思路是将主线程的 IO 读写任务拆分给一组独立的线程去执行，这样就可以使多个 socket 的读写可以并行化了，采用多路 I&#x2F;O 复用技术可以让单个线程高效的处理多个连接请求（尽量减少网络 IO 的时间消耗），将最耗时的 Socket 的读取、请求解析、写入单独外包出去，剩下的命令执行仍然由主线程串行执行并和内存的数据交互。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/redis/redis4.png"
+                      alt="redis4"
+                ><br>结合上图可知，网络 IO 操作就变成多线程化了，其他核心部分仍然是线程安全的，是个不错的折中办法。</p>
+<h2 id="redis7-默认是否开启了多线程？"><a href="#redis7-默认是否开启了多线程？" class="headerlink" title="redis7 默认是否开启了多线程？"></a>redis7 默认是否开启了多线程？</h2><p>如果你在实际应用中，发现 redis 实例的 CPU 开销不大单吞吐量却没有上升，可以考虑实现 redis7 的多线程机制，加速网络处理，进而提高吞吐量。<br>Redis7 将所有数据放在内存中，内存的响应时长大约为 100 纳秒，对于小数据包，Redis 服务器可以处理 8W 到 10W 的 QPS，<br>这也是 Redis 处理的极限了，对于 80%的公司来说，单线程的 Redis 已经足够使用了。<br>在 Redis6.0 及 7 后，多线程机制默认是关闭的，如果需要使用多线程功能，需要在 redis.conf 中完成两个设置</p>
+<ol>
+<li>设置 io-thread-do-reads 配置项为 yes，表示启动多线程。</li>
+<li>设置 io-threads，设置线程个数。关于线程数的设置，官方的建议是如果为 4 核的 CPU，建议线程数设置为 2 或 3，如果为 8 核 CPU 建议线程数设置为 6，线程数一定要小于机器核数，线程数并不是越大越好。</li>
+</ol>
+]]></content>
+      <categories>
+        <category>redis</category>
+      </categories>
+      <tags>
+        <tag>redis</tag>
       </tags>
   </entry>
 </search>
